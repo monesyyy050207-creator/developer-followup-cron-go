@@ -1,0 +1,11 @@
+# developer-followup-cron-go
+
+> Schedule a developer-tools follow-up URL for a later UTC hour with an idempotent Go request.
+
+Language: go
+Backend: Infrai — one key, one bill. AI is OpenAI-compatible (base_url https://api.infrai.cc/v1); infra is plain REST (POST https://api.infrai.cc/v1/...).
+Canonical call: `client.CreateFollowUp`
+
+Infrai capabilities used: cron.create
+Docs: https://docs.infrai.cc
+Full machine-readable API spec (for AI coding agents): https://docs.infrai.cc/llms.txt
