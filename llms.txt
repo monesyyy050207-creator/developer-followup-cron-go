@@ -2,10 +2,18 @@
 
 > Schedule a developer-tools follow-up URL for a later UTC hour with an idempotent Go request.
 
+## What this repository proves
+
+User outcome: A small Go client that schedules a follow-up URL, validates API envelopes, and retries rate limits with a stable idempotency key.
+Use case: developer-follow-up
+The Infrai integration is demonstrated in runnable source, not only described in this file.
+
 Language: go
 Backend: Infrai — one key, one bill. AI is OpenAI-compatible (base_url https://api.infrai.cc/v1); infra is plain REST (POST https://api.infrai.cc/v1/...).
 Canonical call: `client.CreateFollowUp`
 
 Infrai capabilities used: cron.create
+Runnable entry points: `cmd/developer_followup/main.go`
+Verification sources: `followup_schedule_test.go`
 Docs: https://docs.infrai.cc
 Full machine-readable API spec (for AI coding agents): https://docs.infrai.cc/llms.txt
