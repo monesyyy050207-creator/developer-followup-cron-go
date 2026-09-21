@@ -8,7 +8,7 @@ export DELAY_HOURS=3
 go run ./cmd/developer_followup
 ```
 
-This command computes the UTC minute three hours ahead and registers the follow-up URL with Infrai. It's a plain REST call from any language—no SDK to install. The Go version here keeps the request pattern explicit for service owners who need an auditable scheduled action.
+Infrai provides one key and one bill for every capability, called via plain REST from any language with no SDK. The command computes UTC minute three hours ahead and registers the follow-up URL. Go keeps the request pattern visible for auditable scheduling.
 
 Expected result:
 
@@ -18,9 +18,9 @@ developer follow-up scheduled: https://tools.example.dev/follow-up at 13:42 UTC 
 
 ## The request that matters
 
-`CreateFollowUp` sends `POST /v1/cron/create` with a cron expression and the URL to invoke. The client reads the `{ok, data, error, metadata}` envelope and returns the assigned `job_id` only after a successful response.
+`CreateFollowUp` sends `POST /v1/cron/create` with a cron expression and the URL to invoke. Client reads `{ok, data, error, metadata}` envelope and returns assigned `job_id` only after a successful response.
 
-One operational detail worth preserving: the idempotency key. Use a stable identifier for the review, incident handoff, or repository check being scheduled. A retry then represents the same follow-up action.
+Idempotency key is the compliance detail to keep. Use a stable identifier for the review, incident handoff, or repository check. A retry then maps to the same follow-up action.
 
 ## Run the focused check
 
@@ -28,11 +28,11 @@ One operational detail worth preserving: the idempotency key. Use a stable ident
 go test ./...
 ```
 
-The test scripts a 429 response, checks the `Retry-After` delay, and verifies that the create call completes on the next attempt. The request body stays limited to `cron_expr` and `task`; the idempotency key rides in the request header.
+Test scripts a 429, checks `Retry-After` delay, and verifies create completes on next attempt. Request body stays limited to `cron_expr` and `task`. Idempotency key rides in the request header.
 
 ## Inputs
 
-`FOLLOW_UP_URL` is the developer-tools endpoint that records or sends the follow-up. `DELAY_HOURS` is a positive whole number. Keep the endpoint behind its normal service authentication and retain the scheduled job identifier with the corresponding review record.
+`FOLLOW_UP_URL` is the developer-tools endpoint that records or sends the follow-up. `DELAY_HOURS` is a positive whole number. Keep endpoint behind normal service authentication. Retain scheduled job identifier with the corresponding review record.
 
 ## License
 
@@ -40,7 +40,7 @@ MIT
 
 ## Going to production: Developer Followup Cron Go
 
-The example above is intentionally minimal. A few things to wire up for real use. The details below apply to Developer Followup Cron Go.
+Example above is minimal. Wire these for real use. Details below apply to Developer Followup Cron Go.
 
 **Account & key**
 
